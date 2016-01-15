@@ -3,35 +3,35 @@ import java.util.ArrayList;
 
 public class Main {
 	static ArrayList<Person> queue = new ArrayList<Person>();
-	static int totalQ=0;
-	static int time = 0;
-	static int endTime=540;
-	static int fame=20;
-	static int dFame=0;
+	static int totalQ=0; //total waiting time
+	static int time = 0; //current time
+	static int endTime=540; //closing time
+	static int fame=200; //the percentage chance that a customer spawns
+	static int dFame=0; //how fame changes
 	static int nop=0; //number of people in existence
 	static boolean busy=false;
-	static int rdyTime= -1;
-	static boolean pr;
-	static String out;
+	static int rdyTime= -1; //when current customer is finished
+	static boolean pr; //is something should be written that day
+	static String out; //the string that will be printed if something happens at that minute
+	static boolean robbed=false;
 	
 	public static void main(String[] args){
-
 		//Main loop, is run until 18.00, and beyond if she is busy still
 		while(time<=endTime||busy){
-			if(fame!=20){
+			if(fame!=200){
 				fame+=dFame;
 			}else{
 				dFame=0;
 			}
 			
-			out = "The time is "+conTime(time); //the string that will be printed if something happens at that minute
-			pr=false; // a bool for checking if something happens (and the string out should be printed)
+			out = "The time is "+conTime(time); 
+			pr=false;
 			if(time==0){
-				out=out+" The office opens!";
+				out=out+" The office opens";
 				pr=true;
 			}
 			if(time==endTime){
-				out=out+" The door is closed!";
+				out=out+" The door is closed";
 				pr=true;
 			}
 			
@@ -56,7 +56,7 @@ public class Main {
 			
 			//if the test passes and it is before closing, a new customer spawns
 			if(rand(fame)&&time<=endTime){
-				if(rand(0.1f)){
+				if(rand(1)){
 					robbery();
 					
 				}else{
@@ -69,6 +69,10 @@ public class Main {
 			time+=1;
 		}
 		System.out.printf("Total customers: "+nop+" Total waiting time: "+totalQ+" Average waiting time: %.2f minutes",((float)totalQ/(float)nop));
+		if(robbed){
+			System.out.println();
+			System.out.println("Was robbed!");
+		}
 	}
 	
 	public static int errands(){
@@ -86,22 +90,19 @@ public class Main {
 				test=false;
 			}
 		}
-		
 		return count;
 		
 	}
 	
- 	
-	public static boolean rand(float nr){
+	public static boolean rand(int nr){
 		Random randGen = new Random();
-		int roll= randGen.nextInt(99);
+		int roll= randGen.nextInt(999);
 		if(roll<nr){
 			return true;
 		}else{
 			return false;
 		}
 	}
-	
 	
 	public static String conTime(int t){
 		
@@ -121,6 +122,7 @@ public class Main {
 	}
 	
 	public static void robbery(){
+		robbed=true;
 		out = "The time is "+conTime(time);
 		out+=" and the office was ROBBED, ";
 		
@@ -131,13 +133,13 @@ public class Main {
 		}
 		out+=kill+" ppl is kill";
 		
-		if(rand(90)){
-			fame=5;
-			dFame=1;
+		if(rand(10)){
+			fame=50;
+			dFame=10;
 			out+=" and she did not fight it off!";
 		}else{
-			fame=50;
-			dFame=-1;
+			fame=500;
+			dFame=-10;
 			out+=" and she fought it off!";
 		}
 		
@@ -168,5 +170,6 @@ public class Main {
 		}
 		queue.get(0).setToa(time);
 	}
+
 }
 

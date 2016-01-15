@@ -9,9 +9,9 @@ public class Person {
 		setToa(aTime);
 	}
 	public Person(int ID,int aTime){
-		setId(ID);
-		setName("Lars");
-		setToa(aTime);
+		id=ID;
+		name="Lars";
+		toa=aTime;
 	}
 	public Person(){
 		

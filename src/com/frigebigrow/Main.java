@@ -1,10 +1,7 @@
 package com.frigebigrow;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 	static ArrayList<Person> queue = new ArrayList<Person>();
@@ -21,8 +18,7 @@ public class Main {
 	static boolean robbed=false;
 	static ArrayList<String> nameList= new ArrayList<String>();
 
-	
-	public static void main(String[] args) throws FileNotFoundException{
+	public static void main(String[] args){
 		while(time<=endTime||busy){
 			
 			outString = "The time is "+conTime(time); 
